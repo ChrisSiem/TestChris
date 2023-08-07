@@ -1,0 +1,42 @@
+﻿NAMESPACE nsMainUnit
+ORGANIZATION_BLOCK obMainUnit
+TITLE = "Main Program Sweep (Cycle)"
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+VERSION : 0.1
+   VAR_TEMP 
+      tVitesse : UDInt;
+   END_VAR
+
+
+BEGIN
+	//Appel Perceuse
+	//Première manière de faire, on appel un FC Main du software unit et on lui passe les infos
+	//à partir d'un DB global du main programme. En effet limitation, on ne peut pas donner
+	//directement une constante ou un Memento, par contre ok pour IOs ou DB
+	
+	_.nsMainPerceuse.fcMain(iStart := _.dbDataFromMainPrg.tag1,
+	                        iFaster := _.dbDataFromMainPrg."tag2 TOTO",
+	                        iSlower := _.dbDataFromMainPrg.tag3,
+	                        oStatus => _.dbDataFromMainPrg.tag5,
+	                        ioSpeed := _.dbDataFromMainPrg.tag4);
+	
+	
+	// Appel convoyeur
+	//Seconde manière de faire
+	// On utilise l'interface DB et on passe les paramètre et on appel le Main du software unit
+	// Pas d'accès au Meneto ou IOs uniquement DB global
+	// 
+	_.nsConvoyeur.Interface."iStart/Stop" := _.dbDataFromMainPrg.tag1;
+	_.nsConvoyeur.Interface.iAccelerate := _.dbDataFromMainPrg."tag2 TOTO";
+	_.nsConvoyeur.Interface.iDecelerate := _.dbDataFromMainPrg.tag3;
+	_.nsConvoyeur.Interface.ioPosition := 0;
+	_.nsConvoyeur.Interface.iVitesseRPM := 3;
+	
+	_.nsConvoyeur.fcMain();
+	
+	_.nsConvoyeur.Interface.oVitessePercent := #tVitesse;
+	
+	
+END_ORGANIZATION_BLOCK
+END_NAMESPACE
+

@@ -1,0 +1,36 @@
+﻿FUNCTION_BLOCK "fbProcessControlSCL"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iTemperature : Int;
+      iTarget : Int;
+   END_VAR
+
+   VAR_OUTPUT 
+      oTemperatureTooHigh : Bool;
+      oTemperatureTooLow : Bool;
+   END_VAR
+
+   VAR_IN_OUT 
+      InOut_1 : Bool;
+   END_VAR
+
+
+BEGIN
+	IF #iTemperature > 100 THEN
+	    #oTemperatureTooHigh := True;
+	ELSIF #iTemperature < 10 THEN
+	    #oTemperatureTooHigh := FALSE;
+	    #oTemperatureTooHigh := FALSE;
+	END_IF;
+	// Modif dfdsqdfqsvvdfgvfdgvzerzerzerzer
+	// Modif bug 25
+	
+	
+	
+	
+	
+	
+	
+END_FUNCTION_BLOCK
+

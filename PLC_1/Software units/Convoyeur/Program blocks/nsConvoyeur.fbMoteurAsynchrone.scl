@@ -1,0 +1,27 @@
+﻿NAMESPACE nsConvoyeur
+FUNCTION_BLOCK fbMoteurAsynchrone
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "iStart/Stop" : Bool;
+      iAccelerate : Bool;
+      iDecelerate : Bool;
+   END_VAR
+
+   VAR_IN_OUT 
+      ioPosition : UDInt;
+   END_VAR
+
+
+BEGIN
+	IF #iAccelerate = true AND #"iStart/Stop"=1 THEN
+	    #ioPosition := #ioPosition + 1;
+	END_IF;
+	
+	IF #iDecelerate = true AND #"iStart/Stop"=1 THEN
+	    #ioPosition := #ioPosition - 1;
+	END_IF;
+	
+END_FUNCTION_BLOCK
+END_NAMESPACE
+

@@ -1,0 +1,25 @@
+﻿NAMESPACE nsSécheur
+FUNCTION_BLOCK fbControlSécheur
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iIncreaseTemperature : Bool;
+      iDecreaseTemperature : Bool;
+   END_VAR
+
+   VAR_IN_OUT 
+      ioTemperature : UInt;
+   END_VAR
+
+
+BEGIN
+	IF #iIncreaseTemperature=true THEN
+	    #ioTemperature := #ioTemperature + 1;
+	END_IF;
+	
+	IF #iDecreaseTemperature = true THEN
+	    #ioTemperature := #ioTemperature - 1;
+	END_IF;
+END_FUNCTION_BLOCK
+END_NAMESPACE
+

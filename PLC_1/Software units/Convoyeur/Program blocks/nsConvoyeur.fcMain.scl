@@ -1,0 +1,17 @@
+﻿NAMESPACE nsConvoyeur
+FUNCTION fcMain : Void
+{ S7_Optimized_Access := 'TRUE' ; Published := 'TRUE' }
+VERSION : 0.1
+
+BEGIN
+	    idbMoteurAsynchrone("iStart/Stop":=_.nsConvoyeur.Interface."iStart/Stop",
+	                        iDecelerate:=_.nsConvoyeur.Interface.iDecelerate,
+	                        iAccelerate:=_.nsConvoyeur.Interface.iAccelerate,
+	                        ioPosition:=_.nsConvoyeur.Interface.ioPosition);
+	     
+	     fcCalculVitesse(ivitesseRPM:=_.nsConvoyeur.Interface.iVitesseRPM,
+	                     oVitessePercent=>_.nsConvoyeur.Interface.oVitessePercent);
+	     
+END_FUNCTION
+END_NAMESPACE
+

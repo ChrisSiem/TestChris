@@ -1,0 +1,57 @@
+﻿ORGANIZATION_BLOCK "obMainSCL"
+TITLE = "Main Program Sweep (Cycle)"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP 
+      Moteur : Struct
+         Enable : Bool;
+         StartMode : DInt;
+         StopMode : Int;
+         Status : Bool;
+         Busy : Bool;
+         Error : Bool;
+         ErrorId : Word;
+      END_STRUCT;
+      Moteur2 : "User_data_type_1";
+   END_VAR
+
+
+BEGIN
+	// Appel Perceuse
+	// fait dans le main software unit, par contre passage des paramètres via DB.
+	
+	"dbDataFromMainPrg".tag1 := "Tag1";
+	"dbDataFromMainPrg"."tag2 TOTO" := "Tag2";
+	"dbDataFromMainPrg".tag3 := "Tag3";
+	//"dbDataFromMainPrg".tag4 := "Tag4";
+	"dbDataFromMainPrg".tag5 := "Tag5";
+	// Modif importante pour Christophe
+	
+	"fcFonctionMathLAD"(iInput1 := "Tag_1",
+	                    iInput2 := "Tag_2",
+	                    iInput3 := "Tag_3",
+	                    oOutput => "Tag_4");
+	
+	
+	"fcFonctionMathSTL"(iInputValeur1 := 200,
+	                    iInputValeur2 := "Tag_5",
+	                    oResultValeur => "Tag_6");
+	
+	"fbProcessControlSCL_DB"(iTemperature := 0,
+	                         iTarget := 0,
+	                         oTemperatureTooHigh => "Tag_7",
+	                         oTemperatureTooLow => "Tag_8",
+	                         InOut_1 := "Tag_9");
+	
+	
+	"MC_POWER_DB"(Axis := "Moteur1",
+	              Enable := #Moteur.Enable,
+	              StartMode := #Moteur.StartMode,
+	              StopMode := #Moteur.StopMode,
+	              Status => #Moteur.Status,
+	              Busy => #Moteur.Busy,
+	              Error => #Moteur.Error,
+	              ErrorId => #Moteur.ErrorId);
+	
+END_ORGANIZATION_BLOCK
+

@@ -1,0 +1,33 @@
+﻿NAMESPACE nsSécheur
+ORGANIZATION_BLOCK obMain
+TITLE = "Main Program Sweep (Cycle)"
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+VERSION : 0.1
+   VAR_TEMP 
+      tInput1 : Bool;
+      tInput2 : Bool;
+      tInput3 : Bool;
+      toTemperature : UInt;
+      tSecheurTemperature : UInt;
+      tAlarme1 : Bool;
+      tAlarm2 : Bool;
+   END_VAR
+
+
+BEGIN
+	
+	idbControlSécheur(iIncreaseTemperature:= #tInput1,
+	                  iDecreaseTemperature:= #tInput1,
+	                  ioTemperature := #toTemperature);
+	
+	
+	fcAlarmeTemperature(iTemperature:=#tSecheurTemperature,
+	                  iSeuil:=50,
+	                  ioAlarmeSurchauffe:=#tAlarme1,
+	                  ioAlarmeSousChauffe:=#tAlarm2);
+	
+	
+	
+END_ORGANIZATION_BLOCK
+END_NAMESPACE
+
